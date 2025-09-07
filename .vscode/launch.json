@@ -8,6 +8,41 @@
             "program": "${file}",
             "console": "integratedTerminal",
             "python": "/opt/mpcnp/bin/python"
+        },
+        {
+            "name": "MCPNP Server",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/mcpnp/main.py",
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "python": "/opt/mpcnp/bin/python",
+            "args": [
+                "--host",
+                "localhost",
+                "--port",
+                "9124"
+            ]
+        },
+        {
+            "name": "Test MCPNP",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/test_mcpnp.py",
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "python": "/opt/mpcnp/bin/python",
+            "env": {
+                "PYTHONPATH": "${env:PYTHONPATH}:${workspaceFolder}/src/mcpnp"
+            },
+            "args": [
+                "--host",
+                "localhost",
+                "--port",
+                "9124"
+            ]
         }
     ]
 }
