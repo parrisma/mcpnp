@@ -1,0 +1,32 @@
+
+FROM mcpnp_base:latest
+
+# Install Git, GitHub CLI, and SSH daemon
+RUN apt-get update && apt-get install -y git gh openssh-server && rm -rf /var/lib/apt/lists/*
+
+# Set default UID and GID (can be overridden at build time)
+ARG USER_UID=1000
+ARG USER_GID=1679
+
+# Add Unix group 'mcpnp' with configurable GID
+RUN groupadd --system --gid ${USER_GID} mcpnp
+
+# Add user 'mcpnp' with configurable UID and assign to group 'mcpnp'
+RUN useradd --system --uid ${USER_UID} --gid ${USER_GID} --home-dir /home/mcpnp --create-home mcpnp
+
+# Create /mcpnp directory and set ownership to mcpnp
+RUN mkdir /mcpnp && chown mcpnp:mcpnp /mcpnp
+
+# Create /devroot/mcpnp directory and set group to mcpnp
+RUN mkdir -p /home/mcpnp/devroot/mcpnp && chown :mcpnp /home/mcpnp/devroot/mcpnp
+
+# Set working directory to /home/mcpnp for user mcpnp
+USER mcpnp
+WORKDIR /home/mcpnp
+
+# Configure SSH for user mcpnp only (no exposed port, uses ~/.ssh)
+RUN mkdir -p /home/mcpnp/.ssh && chmod 700 /home/mcpnp/.ssh
+
+# Keep container running with infinite wait loop
+CMD ["tail", "-f", "/dev/null"]
+

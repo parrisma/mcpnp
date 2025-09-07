@@ -1,0 +1,17 @@
+FROM mcpnp_base:latest
+
+# Add Unix group 'mcpnp' with auto-allocated GID
+RUN groupadd --system mcpnp
+
+# Add user 'mcpnp' with auto-allocated UID and assign to group 'mcpnp'
+RUN useradd --system --gid mcpnp --home-dir /home/mcpnp --create-home mcpnp
+
+# Create /mcpnp directory and set ownership to mcpnp
+RUN mkdir /mcpnp && chown mcpnp:mcpnp /mcpnp
+
+# Set working directory to /home/mcpnp for user mcpnp
+USER mcpnp
+WORKDIR /home/mcpnp
+
+# Keep container running with infinite wait loop
+CMD ["tail", "-f", "/dev/null"]
