@@ -6,6 +6,7 @@ class McpNpResponses(Enum):
     OK = "ok"
     ERROR = "error"
     MESSAGE = "message"
-    
+    NAN = "nan"
+
     def __str__(self):
         return self.value

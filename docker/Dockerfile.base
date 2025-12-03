@@ -44,4 +44,4 @@ RUN DEBIAN_FRONTEND=noninteractive add-apt-repository ppa:deadsnakes/ppa -y \
 RUN uv venv /opt/mpcnp --python=python3.11
 
 # Install numpy and fastapi into /opt/mpcnp using uv
-RUN uv pip install --python=/opt/mpcnp/bin/python numpy fastapi fastmcp pydantic uvicorn[standard]
+RUN uv pip install --python=/opt/mpcnp/bin/python pandas numpy scipy fastapi fastmcp pydantic uvicorn[standard]
